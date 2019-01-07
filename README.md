@@ -1,5 +1,9 @@
 # Social site with django
 
-Install `misaka` pip dependency:
+Install these dependencies:
 
 `$ pip install misaka`
+
+`$ pip install django-bootstrap4`
+
+`$ pip install django-braces`
