@@ -1,0 +1,16 @@
+{% extends 'posts/post_base.html' %}
+
+{% block pre_post %}
+<div class="col-w25">
+  <h2>@{{ post_user.username }}</h2>
+</div>
+{% endblock %}
+
+
+{% block post_content %}
+<div class="col-w75">
+  {% for item in collection %}
+    {% include 'posts/_post.html' %}
+  {% endfor %}
+</div>
+{% endblock %}
