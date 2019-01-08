@@ -1,4 +1,4 @@
-{% extends 'groups/groups_base.html' %}
+{% extends 'groups/group_base.html' %}
 {% block pregroup %}
 <div class="col-12">
   <h1>
@@ -6,7 +6,7 @@
   </h1>
 
   <h3>
-    Membar: {{ group.members.count }}
+    Members: {{ group.members.count }}
   </h3>
 
   <div>
@@ -24,8 +24,8 @@
   {% if group.posts.count == 0 %}
     <h3>No post in this group</h3>
   {% else %}
-    {% for post in group_post.all %}
-      {% include "post/_post.html" %}
+    {% for post in group.posts.all %}
+      {% include "posts/_post.html" %}
     {% endfor %}
   {% endif %}
 </div>

@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin,PermissionRequiredMixin
 from django.core.urlresolvers import reverse
+from django.db import IntegrityError
 from django.shortcuts import get_object_or_404
 from django.views.generic import (
                                     CreateView,
@@ -12,9 +13,10 @@ from django.views.generic import (
                                     RedirectView,
                                 )
 from groups.models import Group,GroupMember
+from . import models
 
 # Create your views here.
-class CreateGroup(LoginRequiredMixin):
+class CreateGroup(LoginRequiredMixin,CreateView):
     fields = ('name','description')
     model = Group
 
@@ -54,7 +56,7 @@ class LeaveGroup(LoginRequiredMixin,RedirectView):
 
         try:
             membership = GroupMember.objects.filter(
-                user=self/request.user,
+                user=self.request.user,
                 group__slug=self.kwargs.get('slug')
             ).get()
         except GroupMember.DoesNotExist:

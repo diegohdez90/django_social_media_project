@@ -5,7 +5,8 @@ from django.http import Http404
 from django.views.generic import (ListView,DetailView,CreateView,DeleteView)
 from braces.views  import SelectRelatedMixin
 from django.contrib.auth import get_user_model
-from models import Post
+from django.contrib import messages
+from .models import Post
 
 # Create your views here.
 User = get_user_model()
@@ -20,9 +21,8 @@ class UserPosts(ListView):
 
     def get_queryset(self):
         try:
-            self.post.user = User.objects.prefetch_related('posts')
-                                            .get(username__iexact=self.kwargs.get('username'))
-        except User.DoesNotExists:
+            self.post_user = User.objects.prefetch_related('posts').get(username__iexact=self.kwargs.get('username'))
+        except User.DoesNotExist:
             raise Http404
         else:
             return self.post_user.posts.all()
@@ -60,7 +60,7 @@ class DeletePost(LoginRequiredMixin,SelectRelatedMixin,DeleteView):
         return queryset.filter(user_id=self.request.user.id)
 
     def delete(self,*args,**kwargs):
-        message.success(self.request,'Post Deleted')
+        messages.success(self.request,'Post Deleted')
         return super().delete(*args,**kwargs)
 
 

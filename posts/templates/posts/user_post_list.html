@@ -9,7 +9,7 @@
 
 {% block post_content %}
 <div class="col-w75">
-  {% for item in collection %}
+  {% for post in post_list %}
     {% include 'posts/_post.html' %}
   {% endfor %}
 </div>
